@@ -91,6 +91,9 @@ public class Home_1 extends AppCompatActivity {
                                 progressBar.dismiss();
                             }
                         } catch (JSONException e) {
+                            if (progressBar.isShowing()){
+                                progressBar.dismiss();
+                            }
                             System.out.println("lala3");
                             e.printStackTrace();
                         }
@@ -98,6 +101,9 @@ public class Home_1 extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
+                        if (progressBar.isShowing()){
+                            progressBar.dismiss();
+                        }
                         System.out.println("lala4");
                         Log.d("errorku", "onError: "+anError.getErrorCode());
                         Log.d("errorku", "onError: "+anError.getErrorBody());
