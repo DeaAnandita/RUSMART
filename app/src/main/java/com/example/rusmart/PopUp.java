@@ -66,6 +66,7 @@ public class PopUp extends AppCompatActivity {
             if (resultCode == PopUp.RESULT_OK) {
                 System.out.println("lala1");
                 String result = data.getStringExtra("text");
+
                 progressBar = new ProgressDialog(PopUp.this);
 
                 progressBar.setMessage("Please wait");
