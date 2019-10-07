@@ -37,6 +37,7 @@ public class PopUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up);
+        datalist=new ArrayList<>();
 
         Toolbar toolbar = findViewById(R.id.toolbarpopup);
         setSupportActionBar(toolbar);
@@ -71,7 +72,8 @@ public class PopUp extends AppCompatActivity {
 
                 progressBar.setMessage("Please wait");
                 progressBar.show();
-                AndroidNetworking.post("http://192.168.6.182/rusmart/getbarang.php")
+                progressBar.setCancelable(false);
+                AndroidNetworking.post("http://192.168.43.123/rusmart/getbarang.php")
                         .addBodyParameter("kodebarang",result)
                         .setTag("test")
                         .setPriority(Priority.MEDIUM)
@@ -90,8 +92,10 @@ public class PopUp extends AppCompatActivity {
                                         model.setNamabarang(json.getString("namabarang"));
                                         datalist.add(model);
                                     }
-
                                     txtnamabarang.setText(datalist.get(0).getNamabarang());
+                                    if (progressBar.isShowing()){
+                                        progressBar.dismiss();
+                                    }
                                 } catch (JSONException e) {
                                     System.out.println("lala3");
                                     e.printStackTrace();

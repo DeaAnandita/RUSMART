@@ -37,11 +37,10 @@
         app:cardCornerRadius="10dp">
 
         <Spinner
-            android:id="@+id/spinnerJenisKelamin"
+            android:id="@+id/spinnerguru"
             android:layout_width="325dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:entries="@array/kelamin"
             android:outlineAmbientShadowColor="@color/colorAccent" />
     </androidx.cardview.widget.CardView>
 
