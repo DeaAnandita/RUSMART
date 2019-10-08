@@ -2,7 +2,9 @@ package com.example.rusmart;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,8 @@ public class Login extends AppCompatActivity {
     EditText txtpassword;
     Button btnlogin;
 
+    SharedPreferences mLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,8 @@ public class Login extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mLogin = getSharedPreferences("login", Context.MODE_PRIVATE);
+
                 //command here
 
                 user.setUsername (txtusername.getText().toString());
