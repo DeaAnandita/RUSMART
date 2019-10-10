@@ -2,7 +2,9 @@ package com.example.rusmart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -41,7 +43,7 @@ public class Home_1 extends AppCompatActivity {
     Spinner spinnerguru;
     private ProgressDialog progressBar;
     ArrayList<ModelGuru> datalist;
-
+    RecyclerView rvdatapembelian;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class Home_1 extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         datalist=new ArrayList<>();
         spinnerguru=findViewById(R.id.spinnerguru);
+        rvdatapembelian=findViewById(R.id.rvdatapembelian);
         progressBar = new ProgressDialog(Home_1.this);
 
         progressBar.setMessage("Please wait");
@@ -176,11 +179,20 @@ public class Home_1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(Home_1.this,PopUp.class);
-                startActivity(intent);
+                Intent i = new Intent(Home_1.this, PopUp.class);
+                startActivityForResult(i, 100);
 
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
+            String result = data.getStringExtra("result");
+            Log.e("Result", result);
+        }
     }
 }

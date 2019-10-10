@@ -52,6 +52,7 @@
         android:hint="Jumlah Barang"/>
 
     <Button
+        android:id="@+id/btnsaveku"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 public class PopUp extends AppCompatActivity {
     Button btnnamabarang;
+    Button btnsaveku;
     TextView txtnamabarang;
     private ProgressDialog progressBar;
     String foto="";
@@ -45,8 +46,8 @@ public class PopUp extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btnnamabarang=(Button)findViewById(R.id.btnnamabarang);
+        btnsaveku=(Button)findViewById(R.id.btnsaveku);
         txtnamabarang=(TextView)findViewById(R.id.txtnamabarang);
-
         btnnamabarang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +58,15 @@ public class PopUp extends AppCompatActivity {
 
         });
 
+        btnsaveku.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent();
+                intent.putExtra("result","data");
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        });
 
 
     }
