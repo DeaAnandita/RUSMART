@@ -1,7 +1,8 @@
-package com.example.rusmart;
+package com.example.rusmart.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
@@ -24,8 +25,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.rusmart.Model.ModelBarang;
 import com.example.rusmart.Model.ModelGuru;
+import com.example.rusmart.R;
+import com.example.rusmart.adapter.adapter_list_item_barang;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Home_1 extends AppCompatActivity {
+public class CatatPembelian extends AppCompatActivity {
 
     ImageView date;
     TextView show;
@@ -43,7 +45,9 @@ public class Home_1 extends AppCompatActivity {
     Spinner spinnerguru;
     private ProgressDialog progressBar;
     ArrayList<ModelGuru> datalist;
+    ArrayList<ModelBarang> datalistbarang;
     RecyclerView rvdatapembelian;
+    private adapter_list_item_barang adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +58,16 @@ public class Home_1 extends AppCompatActivity {
         getSupportActionBar().setTitle("Catat Tagihan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         datalist=new ArrayList<>();
+        datalistbarang=new ArrayList<>();
+        adapter = new adapter_list_item_barang(getApplicationContext(), datalistbarang);
         spinnerguru=findViewById(R.id.spinnerguru);
         rvdatapembelian=findViewById(R.id.rvdatapembelian);
-        progressBar = new ProgressDialog(Home_1.this);
+        progressBar = new ProgressDialog(CatatPembelian.this);
 
         progressBar.setMessage("Please wait");
         progressBar.show();
         progressBar.setCancelable(false);
-        AndroidNetworking.get("http://192.168.43.123/rusmart/getguru.php")
+        AndroidNetworking.get(baseURL.baseurl+"rusmart/getguru.php")
                 //.addBodyParameter("kodebarang",result)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
@@ -85,7 +91,7 @@ public class Home_1 extends AppCompatActivity {
                                 namaguru[i]=datalist.get(i).getNamaGuru();
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                                    Home_1.this,
+                                    CatatPembelian.this,
                                     android.R.layout.simple_spinner_item,
                                     namaguru
                             );
@@ -123,7 +129,7 @@ public class Home_1 extends AppCompatActivity {
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Home_1.this,HomeDashboard.class);
+                Intent intent = new Intent(CatatPembelian.this,HomeDashboard.class);
                 startActivity(intent);
             }
         });
@@ -138,7 +144,7 @@ public class Home_1 extends AppCompatActivity {
             public void onClick(View view) {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        Home_1.this, new DatePickerDialog.OnDateSetListener() {
+                        CatatPembelian.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
@@ -158,7 +164,7 @@ public class Home_1 extends AppCompatActivity {
             public void onClick(View view) {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        Home_1.this, new DatePickerDialog.OnDateSetListener() {
+                        CatatPembelian.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
@@ -179,7 +185,7 @@ public class Home_1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(Home_1.this, PopUp.class);
+                Intent i = new Intent(CatatPembelian.this, PopUp.class);
                 startActivityForResult(i, 100);
 
             }
@@ -191,8 +197,17 @@ public class Home_1 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-            String result = data.getStringExtra("result");
-            Log.e("Result", result);
+            String namaBarang = data.getStringExtra("namaBarang");
+            String kodeBarang = data.getStringExtra("kodeBarang");
+            String jumlah = data.getStringExtra("jumlah");
+            ModelBarang barang =new ModelBarang();
+            barang.setId(kodeBarang);
+            barang.setNamabarang(namaBarang);
+            barang.setJumlah(Integer.parseInt(jumlah));
+            datalistbarang.add(barang);
+            rvdatapembelian.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            rvdatapembelian.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
     }
 }

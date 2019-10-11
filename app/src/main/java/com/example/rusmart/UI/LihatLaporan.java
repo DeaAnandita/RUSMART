@@ -1,4 +1,4 @@
-package com.example.rusmart;
+package com.example.rusmart.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,9 +12,11 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.rusmart.R;
+
 import java.util.Calendar;
 
-public class Home_2 extends AppCompatActivity {
+public class LihatLaporan extends AppCompatActivity {
 
     ImageView date;
     TextView show;
@@ -37,7 +39,7 @@ public class Home_2 extends AppCompatActivity {
         btnview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Home_2.this,HomeDashboard.class);
+                Intent intent = new Intent(LihatLaporan.this,HomeDashboard.class);
                 startActivity(intent);
             }
         });
@@ -52,7 +54,7 @@ public class Home_2 extends AppCompatActivity {
             public void onClick(View view) {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        Home_2.this, new DatePickerDialog.OnDateSetListener() {
+                        LihatLaporan.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
@@ -72,7 +74,7 @@ public class Home_2 extends AppCompatActivity {
             public void onClick(View view) {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                            Home_2.this, new DatePickerDialog.OnDateSetListener() {
+                            LihatLaporan.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 

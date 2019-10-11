@@ -1,4 +1,4 @@
-package com.example.rusmart;
+package com.example.rusmart.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rusmart.Model.QRGeoModel;
-import com.example.rusmart.Model.QRURLModel;
-import com.example.rusmart.Model.QRVCardModel;
+import com.example.rusmart.R;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;

@@ -1,4 +1,4 @@
-package com.example.rusmart;
+package com.example.rusmart.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,15 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.rusmart.Model.ModelBarang;
-import com.google.gson.JsonObject;
+import com.example.rusmart.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +31,7 @@ public class PopUp extends AppCompatActivity {
     TextView txtnamabarang;
     private ProgressDialog progressBar;
     String foto="";
-
+    EditText jumlah;
     ArrayList<ModelBarang> datalist;
 
     @Override
@@ -46,6 +46,7 @@ public class PopUp extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btnnamabarang=(Button)findViewById(R.id.btnnamabarang);
+        jumlah=(EditText) findViewById(R.id.txtjumlah);
         btnsaveku=(Button)findViewById(R.id.btnsaveku);
         txtnamabarang=(TextView)findViewById(R.id.txtnamabarang);
         btnnamabarang.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +63,9 @@ public class PopUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent();
-                intent.putExtra("result","data");
+                intent.putExtra("namaBarang",datalist.get(0).getNamabarang());
+                intent.putExtra("kodeBarang",datalist.get(0).getId());
+                intent.putExtra("jumlah",jumlah.getText().toString());
                 setResult(RESULT_OK,intent);
                 finish();
             }
@@ -82,7 +85,7 @@ public class PopUp extends AppCompatActivity {
                 progressBar.setMessage("Please wait");
                 progressBar.show();
                 progressBar.setCancelable(false);
-                AndroidNetworking.post("http://192.168.43.123/rusmart/getbarang.php")
+                AndroidNetworking.post(baseURL.baseurl+"rusmart/getbarang.php")
                         .addBodyParameter("kodebarang",result)
                         .setTag("test")
                         .setPriority(Priority.MEDIUM)
@@ -97,7 +100,7 @@ public class PopUp extends AppCompatActivity {
                                     for (int i = 0; i <result.length() ; i++) {
                                         ModelBarang model = new ModelBarang();
                                         JSONObject json = result.getJSONObject(i);
-                                        model.setId(json.getString("id"));
+                                        model.setId(json.getString("kodebarang"));
                                         model.setNamabarang(json.getString("namabarang"));
                                         datalist.add(model);
                                     }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PopUp"
+    tools:context=".UI.PopUp"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -44,6 +44,7 @@
     </LinearLayout>
 
     <EditText
+        android:id="@+id/txtjumlah"
         android:inputType="number"
         android:layout_width="320dp"
         android:layout_height="wrap_content"

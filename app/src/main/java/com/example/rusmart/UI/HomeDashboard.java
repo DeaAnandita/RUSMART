@@ -1,4 +1,4 @@
-package com.example.rusmart;
+package com.example.rusmart.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -6,6 +6,8 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.rusmart.R;
 
 public class HomeDashboard extends AppCompatActivity {
 
@@ -23,7 +25,7 @@ public class HomeDashboard extends AppCompatActivity {
         cdCatatTagihan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeDashboard.this,Home_1.class);
+                Intent intent = new Intent(HomeDashboard.this, CatatPembelian.class);
                 startActivity(intent);
             }
         });
@@ -31,7 +33,7 @@ public class HomeDashboard extends AppCompatActivity {
         cdLihatTagihan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeDashboard.this,Home_2.class);
+                Intent intent = new Intent(HomeDashboard.this, LihatLaporan.class);
                 startActivity(intent);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.rusmart;
+package com.example.rusmart.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,10 +15,9 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.example.rusmart.Model.ModelGuru;
 import com.example.rusmart.Model.UserModel;
+import com.example.rusmart.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,7 +48,7 @@ public class Login extends AppCompatActivity {
                 progressBar.setCancelable(false);
                 user.setUsername (txtusername.getText().toString());
                 user.setPassword ( txtusername.getText().toString());
-                AndroidNetworking.post("http://192.168.43.123/rusmart/login.php")
+                AndroidNetworking.post(baseURL.baseurl+"rusmart/login.php")
                         .addBodyParameter("username",txtusername.getText().toString())
                         .addBodyParameter("password",txtpassword.getText().toString())
                         .setTag("test")
@@ -69,6 +67,7 @@ public class Login extends AppCompatActivity {
                                         if (progressBar.isShowing()){
                                             progressBar.dismiss();
                                         }
+                                        startActivity(new Intent(getApplicationContext(), HomeDashboard.class));
                                     }else{
                                         Toast.makeText(getApplicationContext(),"Login gagal", Toast.LENGTH_LONG).show();
                                     }
