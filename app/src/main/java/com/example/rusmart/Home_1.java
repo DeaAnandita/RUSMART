@@ -1,20 +1,33 @@
 package com.example.rusmart;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.rusmart.Model.ModelGuru;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Home_1 extends AppCompatActivity {
@@ -23,6 +36,9 @@ public class Home_1 extends AppCompatActivity {
     TextView show;
     Button btnsave;
     private FloatingActionButton fab;
+    Spinner spinnerguru;
+    private ProgressDialog progressBar;
+    ArrayList<ModelGuru> datalist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +49,67 @@ public class Home_1 extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Catat Tagihan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        datalist=new ArrayList<>();
+        spinnerguru=findViewById(R.id.spinnerguru);
+        progressBar = new ProgressDialog(Home_1.this);
+
+        progressBar.setMessage("Please wait");
+        progressBar.show();
+        progressBar.setCancelable(false);
+        AndroidNetworking.get("http://192.168.6.191/rusmart/getguru.php")
+                //.addBodyParameter("kodebarang",result)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            System.out.println("lala2");
+                            Log.d("hasil", "onResponse: "+response.toString());
+                            JSONArray result = response.getJSONArray("result");
+                            for (int i = 0; i <result.length() ; i++) {
+                                ModelGuru model = new ModelGuru();
+                                JSONObject json = result.getJSONObject(i);
+                                model.setKodeGuru(json.getString("kodeGuru"));
+                                model.setNamaGuru(json.getString("namaGuru"));
+                                datalist.add(model);
+                            }
+                            String[] namaguru=new String[datalist.size()];
+                            for (int i = 0; i <datalist.size() ; i++) {
+                                namaguru[i]=datalist.get(i).getNamaGuru();
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                                    Home_1.this,
+                                    android.R.layout.simple_spinner_item,
+                                    namaguru
+                            );
+                            spinnerguru.setAdapter(adapter);
+                            if (progressBar.isShowing()){
+                                progressBar.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            if (progressBar.isShowing()){
+                                progressBar.dismiss();
+                            }
+                            System.out.println("lala3");
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        if (progressBar.isShowing()){
+                            progressBar.dismiss();
+                        }
+                        System.out.println("lala4");
+                        Log.d("errorku", "onError: "+anError.getErrorCode());
+                        Log.d("errorku", "onError: "+anError.getErrorBody());
+                        Log.d("errorku", "onError: "+anError.getErrorDetail());
+
+                    }
+                });
+
 
         date = findViewById(R.id.date);
         show = findViewById(R.id.show);

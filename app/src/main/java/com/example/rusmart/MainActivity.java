@@ -1,10 +1,12 @@
 package com.example.rusmart;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.rusmart.Model.ControlLogin;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,14 +15,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int x = 1000;
+        int x = 2000;
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                Intent i = new Intent(MainActivity.this, Login.class);
-                startActivity(i);
+                Intent intent = new Intent(MainActivity.this, ControlLogin.class);
+                startActivity(intent);
                 finish();
 
             }
