@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".UI.QRBarcode"></activity>
         <activity android:name=".UI.PopUp" />
         <activity android:name=".UI.LihatLaporan" />
@@ -18,6 +19,16 @@
         <activity android:name=".UI.HomeDashboard" />
         <activity android:name=".UI.Login" />
         <activity android:name=".UI.SplashScreen">
+=======
+        <activity android:name=".QRBarcode"></activity>
+        <activity android:name=".PopUp" />
+        <activity android:name=".Model.ControlLogin"/>
+        <activity android:name=".Home_2" />
+        <activity android:name=".Home_1" />
+        <activity android:name=".HomeDashboard" />
+        <activity android:name=".Login" />
+        <activity android:name=".MainActivity">
+>>>>>>> 92c821487245f06c1b1f311ee768b6025588ea0f
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
